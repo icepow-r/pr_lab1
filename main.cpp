@@ -2,6 +2,7 @@
 
 int main()
 {
+    std::cout << "Размеры различных типов данных: " << std::endl;
     std::cout << "int: " << sizeof(int) << std::endl
               << "short int: " << sizeof(short int) << std::endl
               << "long int: " << sizeof(long int) << std::endl
@@ -11,32 +12,23 @@ int main()
               << "char: " << sizeof(char) << std::endl
               << "bool: " << sizeof(bool) << std::endl;
 
-    int integer = 12345678; // 0 000 0000 1011 1100 0110 0001 0100 1110
 
-    std::cout << "12345678: ";
+    std::cout << "Введите целое число: ";
+    int integer;
+    std::cin >> integer;
+    std::cout << "Двоичное представление целого числа " << integer << ": ";
     unsigned int mask = 1U << 31;
     for (int i = 0; i < 32; i++)
     {
         std::cout << ((integer & mask) ? "1" : "0");
-
-        if (i == 0)
+        if (i == 0 || (i + 1) % 4 == 0)
         {
             std::cout << " ";
         }
-
-        if ((i + 1) % 4 == 0)
-        {
-            std::cout << " ";
-        }
-
         mask >>= 1;
     }
-
-    //float
+    std::cout << std::endl;
     mask = 1U << 31;
-
-    std::cout << std::endl
-              << "float 3.14: ";
 
     union
     {
@@ -44,23 +36,21 @@ int main()
         int two;
     } hack;
 
-    hack.one = 3.14;
+    std::cout << "Введите вещественное число: ";
+    std::cin >> hack.one;
+    std::cout << "Двоичное представление вещественного числа " << hack.one << ": ";
 
     for (int i = 0; i < 32; i++)
     {
         std::cout << ((hack.two & mask) ? "1" : "0");
-
         if (i == 0 || i == 8)
         {
             std::cout << " ";
         }
-
         mask >>= 1;
     }
-
-    //double
-    std::cout << std::endl
-              << "double 3.14: ";
+    mask = 1U << 31;
+    std::cout << std::endl;
 
     union
     {
@@ -68,22 +58,18 @@ int main()
         int two[2];
     } double_hack;
 
-    double_hack.one = -1234.5678;
-
-    mask = 1U << 31;
-
+    std::cout << "Введите вещественное число двойной точности: ";
+    std::cin >> double_hack.one;
+    std::cout << "Двоичное представление вещественного числа двойной точности " << double_hack.one << ": ";
     for (int i = 0; i < 64; i++)
     {
         int index = i < 64 / 2;
         std::cout << ((double_hack.two[index] & mask) ? "1" : "0");
-
         if (i == 0 || i == 11)
         {
             std::cout << " ";
         }
-
         mask >>= 1;
-
         if (mask == 0)
         {
             mask = 1U << 31;
